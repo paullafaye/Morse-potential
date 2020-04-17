@@ -17,7 +17,7 @@ def cv_vib(tD, tm):
     return temperature, result
 
 if __name__ == "__main__": 
-    print (cv_vib(376, 933))
+    print (cv_vib(376.447744459516, 933))
 
 
 
