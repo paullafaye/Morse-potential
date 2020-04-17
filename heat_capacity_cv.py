@@ -1,19 +1,19 @@
-from sympy import *
-from math import exp, floor
+from scipy.integrate import quad
+import math
 import numpy as np
 
-
-x = symbols('x')
 na = 6.022140857*10**23
-kb = 0.00008617330336
+kb = 1.380649*10**(-23)
 
-def cv_vib(thetaD, tm):    
-    global na
-    global kb
-    for t in np.linspace(1, tm, 100):
-        print(9*na*kb*((t/thetaD)**3))*integrate(x**4*exp(x)/(exp(x)-1)**2, (x, 0.01, thetaD/t))
+def debye(x):
+    return (x**4)*np.exp(x)/(((np.exp(x)-1)**2))
 
+def cv(t, thetaD):
+    return 9*na*kb*((t/thetaD)**3)*quad(debye, 0, thetaD/t)[0]
 
-if __name__ == "__main__": 
-    print(cv_vib(376, 933))
+vec_cv = np.vectorize(cv)
 
+def cv_vib(thetaD, tm):
+    return(vec_cv(np.arange(1.0, tm, 10), thetaD))
+
+print(cv_vib(376, 933))
