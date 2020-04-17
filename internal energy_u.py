@@ -9,7 +9,7 @@ def debye(x):
     return (x**3)/(((np.exp(x)-1)))
 
 def u(t, thetaD):
-    return 9*na*kb*((t/thetaD)**3)*quad(debye, 0, thetaD/t)[0]
+    return 9*na*kb*t*((t/thetaD)**3)*quad(debye, 0, thetaD/t)[0]
 
 vec_u = np.vectorize(u)
 
